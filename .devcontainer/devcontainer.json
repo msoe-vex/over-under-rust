@@ -1,0 +1,40 @@
+{
+    "name": "vex-rt",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "bash"
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "streetsidesoftware.code-spell-checker",
+                "GitHub.vscode-pull-request-github",
+                "DotJoshJohnson.xml",
+                "redhat.vscode-yaml",
+                "yzhang.markdown-all-in-one",
+                "vadimcn.vscode-lldb",
+                "mutantdino.resourcemonitor",
+                "rust-lang.rust-analyzer",
+                "tamasfe.even-better-toml",
+                "serayuzgur.crates"
+                // "sigbots.pros"
+            ]
+        }
+    },
+    "runArgs": [
+        // This will allow you to use a ptrace-based debugger like C++
+        "--network=host",
+        "--cap-add=SYS_PTRACE",
+        "--security-opt=seccomp:unconfined",
+        "--security-opt=apparmor:unconfined"
+        // "--volume=/tmp/.X11-unix:/tmp/.X11-unix"
+    ]
+}
