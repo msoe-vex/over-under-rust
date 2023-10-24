@@ -6,7 +6,7 @@ pub type Subsystem = ();
 
 pub enum TaskNode {
     ParallelTaskGroup(Vec<TaskNode>),
-    SequentialTaskGroup(),
+    SequentialTaskGroup(Vec<TaskNode>),
     //TODO: make task contain the type for subsystems
     Task(Box<dyn Task>),
 }
