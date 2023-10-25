@@ -1,14 +1,15 @@
-use alloc::{boxed::Box, vec::Vec};
+use alloc::{boxed::Box, rc::Rc, vec::Vec};
 
 use super::task::Task;
 
 pub type Subsystem = ();
 
+#[derive(Clone)]
 pub enum TaskNode {
     ParallelTaskGroup(Vec<TaskNode>),
     SequentialTaskGroup(Vec<TaskNode>),
     //TODO: make task contain the type for subsystems
-    Task(Box<dyn Task>),
+    Task(Rc<dyn Task>),
 }
 
 impl TaskNode {
