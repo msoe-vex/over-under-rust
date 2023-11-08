@@ -15,6 +15,7 @@ pub mod drive;
 pub mod file_system;
 mod robot_15_in;
 mod robot_24_in;
+pub mod subsystems;
 mod task_manager_thingy;
 
 enum RobotController {
