@@ -18,6 +18,15 @@ Dylan Powers
 
 `str` is the string type in Rust. When working with strings, you should lookup `.parse()` and all of it's variations. String literals are also considered of type `&str` which is the memory address of a string. 
 
+A strange but useful method of variable initialization is with the below structure:
+```
+let y = {
+  let x = 3;
+  x + 1
+};
+```
+Using `{}` anywhere creates a closure that can act as an expression externally. Notice how the final statement in the closure does not have a semi-colon. In closures or functions, if the final statement does not have a semi-colon, Rust treats the closure or function as an expression externally.
+
 # Control Flow
 If statements are considered expressions so the following code is legal.
 ```
@@ -27,4 +36,17 @@ let answer = if (10 == 10) {
   0
 }
 ```
-But all parts of the if statement must have the same return type. Notice also how there are no semicolons in the above code chunk? That is because it is considered a single statement. Rust requires semicolons after every statement.
+But all parts of the if statement must have the same return type. Notice also how there are no semicolons in the above code chunk? That is because it is considered a single statement. Rust requires semicolons after every statement. 
+
+# Functions
+Below is a valid Rust function:
+```
+fn sale_price(price: i32) -> i32{
+  if is_even(price) {
+    price - 10
+  } else {
+    price - 3
+  }
+}
+```
+All parameters in Rust functions must include a type annotation. Functions do not *always* need return type annotations. However some scenarios do require them. Either way, it is good practice to include them wherever possible. Given previous knowledge, you should be able to notice that without semi-colons, Rust will treat the entire if-else block, and by extension, the function, as an expression.
