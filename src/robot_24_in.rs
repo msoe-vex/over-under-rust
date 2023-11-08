@@ -8,8 +8,8 @@ use vex_rt::{
 };
 
 use crate::{
+    devices::smart_motor::SmartMotor,
     drive::{self, Drive},
-    smart_motor::SmartMotor,
     task_manager_thingy::event::Event,
 };
 
