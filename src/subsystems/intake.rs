@@ -5,7 +5,7 @@ pub struct Intake {
 }
 
 impl Intake {
-    pub fn manual_control(mut self, isOn:bool) -> Result<(), Error> {
+    pub fn manual_control(mut self, isOn: bool) -> Result<(), Error> {
         if (isOn) {
             self.intake.connect()?.move_i8(127);
         }
