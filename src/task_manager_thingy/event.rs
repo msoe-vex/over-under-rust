@@ -1,7 +1,8 @@
-use alloc::boxed::Box;
+use alloc::{boxed::Box, rc::Rc};
 
-pub enum Event<'a> {
-    OneTime(&'a dyn Fn() -> bool),
-    Toggle(bool, &'a dyn Fn() -> bool),
-    While(&'a dyn Fn() -> bool),
+#[derive(Clone)]
+pub enum Event {
+    OneTime(Rc<dyn Fn() -> bool>),
+    Toggle(bool, Rc<dyn Fn() -> bool>),
+    While(Rc<dyn Fn() -> bool>),
 }

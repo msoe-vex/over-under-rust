@@ -1,6 +1,6 @@
 use vex_rt::prelude::*;
 
-use crate::smart_motor::SmartMotor;
+use crate::devices::smart_motor::SmartMotor;
 
 pub struct Drive {
     pub left_drive: SmartMotor,
