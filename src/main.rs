@@ -11,7 +11,6 @@ use vex_rt::prelude::*;
 use crate::file_system::{File, FileOpenMode};
 
 pub mod devices;
-pub mod drive;
 pub mod file_system;
 mod robot_15_in;
 mod robot_24_in;

@@ -1,13 +1,10 @@
 use alloc::vec::Vec;
-use vex_rt::{
-    prelude::{Error, Motor},
-    *,
-};
+use vex_rt::prelude::{Error, Motor};
 
 use super::smart_motor::SmartMotor;
 
 pub struct MotorGroup {
-    motors: Vec<SmartMotor>,
+    pub motors: Vec<SmartMotor>,
 }
 
 impl MotorGroup {
