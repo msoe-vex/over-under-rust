@@ -7,8 +7,8 @@ use vex_rt::{
 };
 
 use crate::{
+    devices::smart_motor::SmartMotor,
     drive::{self, Drive},
-    smart_motor::SmartMotor,
 };
 
 pub struct Robot15In {
