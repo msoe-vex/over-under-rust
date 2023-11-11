@@ -484,6 +484,7 @@ name = "over-under-rust"
 version = "0.1.0"
 dependencies = [
  "libc",
+ "nom",
  "vex-rt",
 ]
 
