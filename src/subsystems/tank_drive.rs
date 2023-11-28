@@ -1,3 +1,5 @@
+use vex_rt::prelude::Error;
+
 use crate::devices::motor_group::MotorGroup;
 
 pub struct TankDrive {
@@ -6,8 +8,9 @@ pub struct TankDrive {
 }
 
 impl TankDrive {
-    pub fn manual_control(&mut self, left: i8, right: i8) {
-        self.left_side.move_i8(left);
-        self.right_side.move_i8(right);
+    pub fn manual_control(&mut self, left: i8, right: i8) -> Result<(), Error> {
+        self.left_side.move_i8(left)?;
+        self.right_side.move_i8(right)?;
+        Ok(())
     }
 }
