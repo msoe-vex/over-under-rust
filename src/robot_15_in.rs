@@ -1,5 +1,6 @@
 use core::time::Duration;
 
+use alloc::vec;
 use vex_rt::{
     prelude::*,
     robot::Robot,
@@ -7,31 +8,35 @@ use vex_rt::{
 };
 
 use crate::{
-    devices::smart_motor::SmartMotor,
-    drive::{self, Drive},
+    devices::{motor_group::MotorGroup, smart_motor::SmartMotor},
+    subsystems::tank_drive::TankDrive,
 };
 
 pub struct Robot15In {
-    drive: Mutex<Drive>,
+    drive: Mutex<TankDrive>,
     controller: Controller,
 }
 
 impl Robot for Robot15In {
     fn new(peripherals: Peripherals) -> Self {
         Self {
-            drive: Mutex::new(drive::Drive {
-                left_drive: SmartMotor::new(
-                    peripherals.port12,
-                    Gearset::EighteenToOne,
-                    EncoderUnits::Degrees,
-                    false,
-                ),
-                right_drive: SmartMotor::new(
-                    peripherals.port13,
-                    Gearset::EighteenToOne,
-                    EncoderUnits::Degrees,
-                    true,
-                ),
+            drive: Mutex::new(TankDrive {
+                left_side: MotorGroup {
+                    motors: vec![SmartMotor::new(
+                        peripherals.port01,
+                        Gearset::EighteenToOne,
+                        EncoderUnits::Degrees,
+                        false,
+                    )],
+                },
+                right_side: MotorGroup {
+                    motors: vec![SmartMotor::new(
+                        peripherals.port02,
+                        Gearset::EighteenToOne,
+                        EncoderUnits::Degrees,
+                        false,
+                    )],
+                },
             }),
             controller: peripherals.master_controller,
         }
@@ -54,7 +59,7 @@ impl Robot for Robot15In {
         let mut l = Loop::new(Duration::from_millis(10));
         loop {
             // Update the motors.
-            self.drive.lock().run(
+            self.drive.lock().manual_control(
                 self.controller.left_stick.get_y().unwrap(),
                 self.controller.right_stick.get_y().unwrap(),
             );

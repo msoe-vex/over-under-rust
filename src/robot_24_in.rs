@@ -1,6 +1,6 @@
 use core::time::Duration;
 
-use alloc::boxed::Box;
+use alloc::vec;
 use vex_rt::{
     prelude::*,
     robot::Robot,
@@ -8,32 +8,74 @@ use vex_rt::{
 };
 
 use crate::{
-    devices::smart_motor::SmartMotor,
-    drive::{self, Drive},
-    task_manager_thingy::event::Event,
+    devices::{motor_group::MotorGroup, smart_motor::SmartMotor},
+    subsystems::tank_drive::TankDrive,
 };
 
 pub struct Robot24In {
-    drive: Mutex<Drive>,
+    drive: Mutex<TankDrive>,
     controller: Controller,
 }
 
 impl Robot for Robot24In {
     fn new(peripherals: Peripherals) -> Self {
+        let left_motor1 = SmartMotor::new(
+            peripherals.port01,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            false,
+        );
+        let left_motor2 = SmartMotor::new(
+            peripherals.port02,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            false,
+        );
+        let left_motor3 = SmartMotor::new(
+            peripherals.port03,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            false,
+        );
+        let left_motor4 = SmartMotor::new(
+            peripherals.port04,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            false,
+        );
+        let right_motor1 = SmartMotor::new(
+            peripherals.port05,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            true,
+        );
+        let right_motor2 = SmartMotor::new(
+            peripherals.port06,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            true,
+        );
+        let right_motor3 = SmartMotor::new(
+            peripherals.port07,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            true,
+        );
+        let right_motor4 = SmartMotor::new(
+            peripherals.port08,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            true,
+        );
+
         Self {
-            drive: Mutex::new(drive::Drive {
-                left_drive: SmartMotor::new(
-                    peripherals.port12,
-                    Gearset::EighteenToOne,
-                    EncoderUnits::Degrees,
-                    false,
-                ),
-                right_drive: SmartMotor::new(
-                    peripherals.port13,
-                    Gearset::EighteenToOne,
-                    EncoderUnits::Degrees,
-                    true,
-                ),
+            drive: Mutex::new(TankDrive {
+                left_side: MotorGroup {
+                    motors: vec![left_motor1, left_motor2, left_motor3, left_motor4],
+                },
+                right_side: MotorGroup {
+                    motors: vec![right_motor1, right_motor2, right_motor3, right_motor4],
+                },
             }),
             controller: peripherals.master_controller,
         }
@@ -56,7 +98,7 @@ impl Robot for Robot24In {
         let mut l = Loop::new(Duration::from_millis(10));
         loop {
             // Update the motors.
-            self.drive.lock().run(
+            self.drive.lock().manual_control(
                 self.controller.left_stick.get_y().unwrap(),
                 self.controller.right_stick.get_y().unwrap(),
             );
