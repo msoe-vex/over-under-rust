@@ -27,10 +27,9 @@ impl Robot for RobotController {
         let robot_name = {
             match File::open("/usd/robotName.txt", FileOpenMode::Read) {
                 Some(file) => file.read().unwrap(),
-                None => String::from("Unknown"),
+                None => String::from("15in"),
             }
         };
-
         println!("{}", &robot_name);
 
         match robot_name.as_str() {
