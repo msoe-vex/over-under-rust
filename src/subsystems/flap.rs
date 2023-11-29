@@ -1,11 +1,11 @@
-use vex_rt::prelude::Error;
+use vex_rt::prelude::*;
 
-use crate::devices::pneumatic::{self, Pneumatic};
+use crate::devices::pneumatic::Pneumatic;
 
 pub struct Flap {
     pub pneumatic: Pneumatic,
-    prev_state: bool,
-    current_state: bool,
+    prev_button_state: bool,
+    current_flap_state: bool,
 }
 
 const OPEN: bool = true;
@@ -15,18 +15,18 @@ impl Flap {
     pub fn new(pneumatic: Pneumatic) -> Flap {
         Flap {
             pneumatic,
-            prev_state: CLOSED,
-            current_state: CLOSED,
+            prev_button_state: false,
+            current_flap_state: CLOSED,
         }
     }
 
-    pub fn manual_control(&mut self, open: bool) -> Result<(), Error> {
-        if open && self.prev_state == CLOSED {
-            self.current_state = !self.current_state;
-            self.pneumatic.connect()?.write(self.current_state)?;
+    pub fn manual_control(&mut self, button_pressed: bool) -> Result<(), Error> {
+        if button_pressed && self.prev_button_state == false {
+            self.current_flap_state = !self.current_flap_state;
+            self.pneumatic.connect()?.write(self.current_flap_state)?;
         }
 
-        self.prev_state = self.current_state;
+        self.prev_button_state = button_pressed;
         Ok(())
     }
 }
