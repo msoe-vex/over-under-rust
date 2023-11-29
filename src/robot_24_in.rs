@@ -85,11 +85,11 @@ impl Robot for Robot24In {
                     motors: vec![right_motor1, right_motor2, right_motor3, right_motor4],
                 },
             }),
-            intake: Mutex::new(Intake {
-                intake: MotorGroup {
+            intake: Mutex::new(Intake::new(
+                MotorGroup {
                     motors: vec![intake_motor],
                 },
-            }),
+            )),
 
             controller: peripherals.master_controller,
         }
@@ -118,8 +118,9 @@ impl Robot for Robot24In {
             );
 
             // intake control
-            let is_on = self.controller.l2.is_pressed().unwrap_or(false);
-            self.intake.lock().manual_control(is_on);
+            let intake_direction = self.controller.l2.is_pressed().unwrap_or(false);
+            let intake_state = self.controller.r2.is_pressed().unwrap_or(false);
+            self.intake.lock().manual_control(intake_state, intake_direction);
 
             select! {
                 // If the driver control period is done, break out of the loop.

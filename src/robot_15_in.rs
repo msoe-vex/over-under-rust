@@ -74,7 +74,7 @@ impl Robot for Robot15In {
             peripherals.port13,
             Gearset::EighteenToOne,
             EncoderUnits::Degrees,
-            false,
+            true,
         );
 
         let left_flap: Flap = Flap::new(Pneumatic::new(peripherals.port_h));
@@ -92,11 +92,11 @@ impl Robot for Robot15In {
             }),
             left_flap: Mutex::new(left_flap),
             right_flap: Mutex::new(right_flap),
-            intake: Mutex::new(Intake {
-                intake: MotorGroup {
+            intake: Mutex::new(Intake::new(
+                MotorGroup {
                     motors: vec![intake_motor],
                 },
-            }),
+            )),
             controller: peripherals.master_controller,
         }
     }
@@ -128,10 +128,11 @@ impl Robot for Robot15In {
                     println!("{err}");
                 });
 
-            let intake_state = self.controller.l2.is_pressed().unwrap_or(false);
+            let intake_direction = self.controller.l2.is_pressed().unwrap_or(false);
+            let intake_state = self.controller.r2.is_pressed().unwrap_or(false);
             self.intake
                 .lock()
-                .manual_control(intake_state)
+                .manual_control(intake_state, intake_direction)
                 .unwrap_or_else(|err| {
                     println!("{err}");
                 });
