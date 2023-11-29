@@ -9,11 +9,13 @@ use vex_rt::{
 
 use crate::{
     devices::{motor_group::MotorGroup, smart_motor::SmartMotor},
+    subsystems::intake::Intake,
     subsystems::tank_drive::TankDrive,
 };
 
 pub struct Robot24In {
     drive: Mutex<TankDrive>,
+    intake: Mutex<Intake>,
     controller: Controller,
 }
 
@@ -67,6 +69,12 @@ impl Robot for Robot24In {
             EncoderUnits::Degrees,
             true,
         );
+        let intake_motor = SmartMotor::new(
+            peripherals.port09,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            true,
+        );
 
         Self {
             drive: Mutex::new(TankDrive {
@@ -77,6 +85,12 @@ impl Robot for Robot24In {
                     motors: vec![right_motor1, right_motor2, right_motor3, right_motor4],
                 },
             }),
+            intake: Mutex::new(Intake {
+                intake: MotorGroup {
+                    motors: vec![intake_motor],
+                },
+            }),
+
             controller: peripherals.master_controller,
         }
     }
@@ -102,6 +116,10 @@ impl Robot for Robot24In {
                 self.controller.left_stick.get_y().unwrap(),
                 self.controller.right_stick.get_y().unwrap(),
             );
+
+            // intake control
+            let is_on = self.controller.l2.is_pressed().unwrap_or(false);
+            self.intake.lock().manual_control(is_on);
 
             select! {
                 // If the driver control period is done, break out of the loop.
