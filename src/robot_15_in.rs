@@ -23,52 +23,52 @@ pub struct Robot15In {
 impl Robot for Robot15In {
     fn new(peripherals: Peripherals) -> Self {
         let left_motor1 = SmartMotor::new(
-            peripherals.port05,
+            peripherals.port14,
             Gearset::ThirtySixToOne,
             EncoderUnits::Degrees,
             true,
         );
         let left_motor2 = SmartMotor::new(
-            peripherals.port07,
+            peripherals.port11,
             Gearset::ThirtySixToOne,
             EncoderUnits::Degrees,
             false,
         );
         let left_motor3 = SmartMotor::new(
-            peripherals.port08,
+            peripherals.port03,
             Gearset::ThirtySixToOne,
             EncoderUnits::Degrees,
             false,
         );
         let left_motor4 = SmartMotor::new(
-            peripherals.port09,
-            Gearset::ThirtySixToOne,
-            EncoderUnits::Degrees,
-            false,
-        );
-        let right_motor1 = SmartMotor::new(
-            peripherals.port01,
+            peripherals.port04,
             Gearset::ThirtySixToOne,
             EncoderUnits::Degrees,
             true,
         );
+        let right_motor1 = SmartMotor::new(
+            peripherals.port05,
+            Gearset::ThirtySixToOne,
+            EncoderUnits::Degrees,
+            false,
+        );
         let right_motor2 = SmartMotor::new(
-            peripherals.port11,
+            peripherals.port15,
             Gearset::ThirtySixToOne,
             EncoderUnits::Degrees,
             true,
         );
         let right_motor3 = SmartMotor::new(
-            peripherals.port03,
+            peripherals.port08,
             Gearset::ThirtySixToOne,
             EncoderUnits::Degrees,
             true,
         );
         let right_motor4 = SmartMotor::new(
-            peripherals.port04,
+            peripherals.port09,
             Gearset::ThirtySixToOne,
             EncoderUnits::Degrees,
-            true,
+            false,
         );
         let intake_motor: SmartMotor = SmartMotor::new(
             peripherals.port13,
