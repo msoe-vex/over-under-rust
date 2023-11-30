@@ -1,6 +1,6 @@
 use vex_rt::prelude::Error;
 
-use crate::devices::motor_group::{MotorGroup, self};
+use crate::devices::motor_group::MotorGroup;
 
 pub struct Intake {
     pub intake: MotorGroup,
