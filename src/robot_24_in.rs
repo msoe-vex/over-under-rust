@@ -22,69 +22,93 @@ pub struct Robot24In {
 impl Robot for Robot24In {
     fn new(peripherals: Peripherals) -> Self {
         let left_motor1 = SmartMotor::new(
-            peripherals.port01,
-            Gearset::EighteenToOne,
-            EncoderUnits::Degrees,
-            false,
-        );
-        let left_motor2 = SmartMotor::new(
-            peripherals.port02,
-            Gearset::EighteenToOne,
-            EncoderUnits::Degrees,
-            false,
-        );
-        let left_motor3 = SmartMotor::new(
             peripherals.port03,
-            Gearset::EighteenToOne,
-            EncoderUnits::Degrees,
-            false,
-        );
-        let left_motor4 = SmartMotor::new(
-            peripherals.port04,
-            Gearset::EighteenToOne,
-            EncoderUnits::Degrees,
-            false,
-        );
-        let right_motor1 = SmartMotor::new(
-            peripherals.port05,
             Gearset::EighteenToOne,
             EncoderUnits::Degrees,
             true,
         );
-        let right_motor2 = SmartMotor::new(
+        let left_motor2 = SmartMotor::new(
+            peripherals.port04,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            true,
+        );
+        let left_motor3 = SmartMotor::new(
+            peripherals.port18,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            true,
+        );
+        let left_motor4 = SmartMotor::new(
             peripherals.port06,
             Gearset::EighteenToOne,
             EncoderUnits::Degrees,
             true,
         );
-        let right_motor3 = SmartMotor::new(
-            peripherals.port07,
-            Gearset::EighteenToOne,
-            EncoderUnits::Degrees,
-            true,
-        );
-        let right_motor4 = SmartMotor::new(
+        let right_motor1 = SmartMotor::new(
             peripherals.port08,
             Gearset::EighteenToOne,
             EncoderUnits::Degrees,
-            true,
+            false,
         );
-        let intake_motor = SmartMotor::new(
+        let right_motor2 = SmartMotor::new(
             peripherals.port09,
             Gearset::EighteenToOne,
             EncoderUnits::Degrees,
+            false,
+        );
+        let right_motor3 = SmartMotor::new(
+            peripherals.port10,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            false,
+        );
+        let right_motor4 = SmartMotor::new(
+            peripherals.port11,
+            Gearset::EighteenToOne,
+            EncoderUnits::Degrees,
+            false,
+        );
+        let intake_motor = SmartMotor::new(
+            peripherals.port14,
+            Gearset::ThirtySixToOne,
+            EncoderUnits::Degrees,
             true,
+        );
+        let left_intake_arm_motor = SmartMotor::new(
+            peripherals.port12,
+            Gearset::ThirtySixToOne,
+            EncoderUnits::Degrees,
+            true
+        );
+        let right_intake_arm_motor = SmartMotor::new(
+            peripherals.port13,
+            Gearset::ThirtySixToOne,
+            EncoderUnits::Degrees,
+            false
+        );
+        let bottom_cata_motor = SmartMotor::new(
+            peripherals.port15,
+            Gearset::ThirtySixToOne,
+            EncoderUnits::Degrees,
+            false
+        );
+        let top_cata_motor = SmartMotor::new(
+            peripherals.port16,
+            Gearset::ThirtySixToOne,
+            EncoderUnits::Degrees,
+            true
         );
 
         Self {
-            drive: Mutex::new(TankDrive {
-                left_side: MotorGroup {
+            drive: Mutex::new(TankDrive::new(
+                MotorGroup {
                     motors: vec![left_motor1, left_motor2, left_motor3, left_motor4],
                 },
-                right_side: MotorGroup {
+                MotorGroup {
                     motors: vec![right_motor1, right_motor2, right_motor3, right_motor4],
                 },
-            }),
+            )),
             intake: Mutex::new(Intake::new(
                 MotorGroup {
                     motors: vec![intake_motor],
@@ -115,6 +139,7 @@ impl Robot for Robot24In {
             self.drive.lock().manual_control(
                 self.controller.left_stick.get_y().unwrap(),
                 self.controller.right_stick.get_y().unwrap(),
+                false
             );
 
             // intake control
