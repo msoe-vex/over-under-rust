@@ -82,14 +82,14 @@ impl Robot for Robot15In {
         let right_flap: Flap = Flap::new(Pneumatic::new(peripherals.port_g));
 
         Self {
-            drive: Mutex::new(TankDrive {
-                left_side: MotorGroup {
+            drive: Mutex::new(TankDrive::new(
+                MotorGroup {
                     motors: vec![left_motor1, left_motor2, left_motor3, left_motor4],
                 },
-                right_side: MotorGroup {
+                MotorGroup {
                     motors: vec![right_motor1, right_motor2, right_motor3, right_motor4],
                 },
-            }),
+            )),
             left_flap: Mutex::new(left_flap),
             right_flap: Mutex::new(right_flap),
             intake: Mutex::new(Intake::new(
@@ -123,6 +123,7 @@ impl Robot for Robot15In {
                 .manual_control(
                     self.controller.left_stick.get_y().unwrap(),
                     self.controller.right_stick.get_y().unwrap(),
+                    self.controller.y.is_pressed().unwrap()
                 )
                 .unwrap_or_else(|err| {
                     println!("{err}");

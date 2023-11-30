@@ -37,7 +37,7 @@ impl MotorGroup {
         }
         Ok(())
     }
-    pub fn move_absolute(&mut self, position: f64, velocity: i32) -> Result<(), MotorError> {
+    pub fn move_absolute(&mut self, position: f64, velocity: i32) -> Result<(), Error> {
         for motor in self.connect()? {
             motor.move_absolute(position, velocity)?;
         }
