@@ -9,13 +9,14 @@ use vex_rt::{
 
 use crate::{
     devices::{motor_group::MotorGroup, smart_motor::SmartMotor},
-    subsystems::intake::Intake,
+    subsystems::{intake::Intake, arm::Arm},
     subsystems::tank_drive::TankDrive,
 };
 
 pub struct Robot24In {
     drive: Mutex<TankDrive>,
     intake: Mutex<Intake>,
+    intake_arm: Mutex<Arm>,
     controller: Controller,
 }
 
@@ -99,6 +100,9 @@ impl Robot for Robot24In {
             EncoderUnits::Degrees,
             true
         );
+        // let cata_pot = AdiAnalog::new(
+            
+        // )
 
         Self {
             drive: Mutex::new(TankDrive::new(
@@ -113,6 +117,11 @@ impl Robot for Robot24In {
                 MotorGroup {
                     motors: vec![intake_motor],
                 },
+            )),
+            intake_arm: Mutex::new(Arm::new(
+                MotorGroup{
+                    motors: vec![left_intake_arm_motor, right_intake_arm_motor],
+                }
             )),
 
             controller: peripherals.master_controller,
@@ -147,6 +156,13 @@ impl Robot for Robot24In {
             let intake_state = self.controller.r2.is_pressed().unwrap_or(false);
             self.intake.lock().manual_control(intake_state, intake_direction);
 
+            self.intake_arm.lock().two_pos_two_button(
+                0.0, 
+                82.0, 
+                self.controller.b.is_pressed().unwrap(), 
+                self.controller.x.is_pressed().unwrap()
+            );
+        
             select! {
                 // If the driver control period is done, break out of the loop.
                 _ = ctx.done() => break,

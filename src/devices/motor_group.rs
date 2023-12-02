@@ -1,5 +1,5 @@
 use alloc::vec::Vec;
-use vex_rt::prelude::{Error, Motor};
+use vex_rt::{prelude::{Error, Motor}, motor::MotorError};
 
 use super::smart_motor::SmartMotor;
 
@@ -37,9 +37,15 @@ impl MotorGroup {
         }
         Ok(())
     }
-    pub fn move_absolute(&mut self, position: f64, velocity: i32) -> Result<(), Error> {
+    pub fn move_absolute(&mut self, position: f64, velocity: Option<i32>) -> Result<(), Error> {
         for motor in self.connect()? {
-            motor.move_absolute(position, velocity)?;
+            motor.move_absolute(position, velocity.unwrap_or(100))?;
+        }
+        Ok(())
+    }
+    pub fn move_relative(&mut self, position: f64, velocity: Option<i32>) -> Result<(), Error> {   
+        for motor in self.connect()? {
+            motor.move_relative(position, velocity.unwrap_or(100))?;
         }
         Ok(())
     }
@@ -54,5 +60,11 @@ impl MotorGroup {
             motor.tare_position();
         }
         Ok(())
+    }
+    pub fn get_target_position(&mut self) -> Result<f64, MotorError> {   
+        return self.connect().unwrap().get(0).unwrap().get_target_position();
+    }
+    pub fn get_position(&mut self) -> Result<f64, MotorError> {   
+        return self.connect().unwrap().get(0).unwrap().get_position();
     }
 }

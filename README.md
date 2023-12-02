@@ -37,9 +37,9 @@ Opening a terminal in VSCode should gain you access to the PROS CLI and Cargo, R
 2. if they don't respond: good luck
 
 ### Cargo/Rust
-The Cargo extension will continually run `cargo check` everytime you make changes. This command will produce warning and error squigglies but it takes a few seconds to run sometimes. So be paitient with it.
+The Cargo extension will continually run `cargo check` everytime you make changes. This command will produce warning and error squigglies but it takes a few seconds to run sometimes. So be patient with it.
 
-If you are trying to run a `cargo` command and are getting an error like `Input/output error (os error 5)` then there is likely something blocking cargo from accessing files. The solution that has worked in the past was adding the project folder to your [anti-virus exclusion path](https://github.com/rust-lang/cargo/issues/11544#issuecomment-1491691403) and then restarting. Given that the above issue was talking about a different error message but the same error code, it is unclear if the exclusion list step is necessary of if a simple restart fixes the issue. Please update this if you have anything to add.
+If you are trying to run a `cargo` command and are getting an error like `Input/output error (os error 5)` then there is likely something blocking cargo from accessing files. The only solution found so far is a computer restart.
 
 ### PROS
 If you have any issues with PROS, especially if you are getting error messages about the PROS Toolchain. Restarting your computer works more often than it should. You can also try uninstalling PROS from the Exention and doing the same with the extension yourself. If you are still having issues or are having other issues, constact a veteran member.

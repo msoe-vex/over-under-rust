@@ -19,7 +19,15 @@ impl Arm {
   }
 
   pub fn move_absolute(&mut self, position: f64) -> Result<(), Error> {
-    self.arm_motors.move_absolute(position, 100);
+    self.arm_motors.move_absolute(position, None);
     Ok(())
+  }
+
+  pub fn two_pos_two_button(&mut self, pos1: f64, pos2: f64, but1: bool, but2: bool) {
+    if but1 {
+      self.move_absolute(pos1);
+    } else if but2 {
+      self.move_absolute(pos2);
+    }
   }
 }
