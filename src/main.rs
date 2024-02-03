@@ -11,7 +11,6 @@ use vex_rt::prelude::*;
 use crate::file_system::{File, FileOpenMode};
 
 pub mod devices;
-pub mod drive;
 pub mod file_system;
 mod robot_15_in;
 mod robot_24_in;
@@ -28,10 +27,9 @@ impl Robot for RobotController {
         let robot_name = {
             match File::open("/usd/robotName.txt", FileOpenMode::Read) {
                 Some(file) => file.read().unwrap(),
-                None => String::from("Unknown"),
+                None => String::from("15in"),
             }
         };
-
         println!("{}", &robot_name);
 
         match robot_name.as_str() {
