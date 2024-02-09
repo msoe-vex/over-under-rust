@@ -42,11 +42,13 @@ Create a folder in your local (Windows) filesystem to store the cache. You can c
 2. if they don't respond: good luck
 
 ### Cargo/Rust
-The Cargo extension will continually run `cargo check` everytime you make changes. This command will produce warning and error squigglies but it takes a few seconds to run sometimes. So be patient with it.
+**Squigglies:** The Cargo extension will continually run `cargo check` everytime you make changes. This command will produce warning and error squigglies but it takes a few seconds to run sometimes. So be patient with it.
 
-If you are trying to run a `cargo` command and are getting an error like `Input/output error (os error 5)` then there is likely something blocking cargo from accessing files. The only solution found so far is a computer restart.
+**Input/output errors:** If you are trying to run a `cargo` command and are getting an error like `Input/output error (os error 5)` then there is likely something blocking cargo from accessing files. The only solution found so far is a computer restart.
+
+**Intellisense issues:** the `rust-analyzer` extention is what provides language support for us. If it is not giving you the intellisense you expect, you can hover over the small words `rust-analyzer` at the bottom of your screen where you can find some troubleshooting options.
 
 ### PROS
-If you have any issues with PROS, especially if you are getting error messages about the PROS Toolchain. Restarting your computer works more often than it should. You can also try uninstalling PROS from the Exention and doing the same with the extension yourself. If you are still having issues or are having other issues, constact a veteran member.
+If you have any issues with PROS, especially if you are getting error messages about the PROS Toolchain. Restarting your computer works more often than it should. You can also try uninstalling PROS from the Extention and doing the same with the extension yourself. If you are still having issues or are having other issues, constact a veteran member.
 
 
