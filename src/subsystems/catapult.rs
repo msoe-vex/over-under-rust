@@ -47,7 +47,7 @@ impl Catapult {
 
         // Define State Actions
         if matches!(self.cata_state, CataState::HOLDING) {
-            if self.cata_pot.read? <= 180 {
+            if self.cata_pot.read()? <= 180 {
                 self.cata_motors.move_voltage(12000);
             } else {
                 self.cata_motors.move_voltage(0);
