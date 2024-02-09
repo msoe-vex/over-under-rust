@@ -46,7 +46,11 @@ Create a folder in your local (Windows) filesystem to store the cache. You can c
 
 **Input/output errors:** If you are trying to run a `cargo` command and are getting an error like `Input/output error (os error 5)` then there is likely something blocking cargo from accessing files. The only solution found so far is a computer restart.
 
-**Intellisense issues:** the `rust-analyzer` extention is what provides language support for us. If it is not giving you the intellisense you expect, you can hover over the small words `rust-analyzer` at the bottom of your screen where you can find some troubleshooting options.
+**Intellisense issues:** the `rust-analyzer` extention is what provides language support for us. If it is not giving you the intellisense you expect, you can hover over the small words `rust-analyzer` at the bottom of your screen where you can find some troubleshooting options. 
+- `Open Logs` gives you a view into exactly what `rust-analyzer` is doing. 
+- You can disable the `cargo check` run on every save with `Disable Check on Save`.
+- `Reload workspace` works well if you can't get `rust-analyzer` to recognize that a change has been made. Git sometimes messes with this.
+- `Restart server` restarts the extension which is a generally helpful thing to try.
 
 ### PROS
 If you have any issues with PROS, especially if you are getting error messages about the PROS Toolchain. Restarting your computer works more often than it should. You can also try uninstalling PROS from the Extention and doing the same with the extension yourself. If you are still having issues or are having other issues, constact a veteran member.
