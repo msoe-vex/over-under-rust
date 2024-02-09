@@ -26,6 +26,11 @@ Opening a terminal in VSCode should gain you access to the PROS CLI and Cargo, R
 
 **Building and uploading the program:** In order to upload the program, first run the command `cargo run` in the terminal. This command runs a script called `upload.sh` in the `build` directory, which handles building the project. Next, run the command `pros upload` in a terminal **outside of the dev container**. This command will upload the code to the currently connected VEX Brain or Controller. Brains or Controllers should be connected to laptops with a USB cable. The command cannot be run inside the dev container due to WSL not detecting the V5 brain.
 
+**Important setup to save you time:** We are running in a docker container which means that any cargo cache files created are not saved when the container exits. That means ALL of the crates used in this project get redownloaded EVERY time to start the container. 
+
+**Fix:**
+Create a folder in your local (Windows) filesystem to store the cache. You can call it whatever you want but everything is hard coded (cause its easy) for `cargo_home` so you should use that. If you want to use a different folder name you will have to change the folder name in `.devcontainer/devcontainer.json` and add it to the `.gitignore`. Once you have done that, when you run `cargo run` you should see `cargo_home` get populated with generated stuff. If you restart the container, it should still be there and your next cargo run will be much faster.
+
 **Another useful PROS command:** `pros ut` will upload the built code to the currently connected VEX Brain or Controller and display the Brain's output on the terminal where the command was run.
 
 **Another useful Cargo command:** `cargo check` will check the project for errors. This command is also automatically run by the Rust Analyzer VS Code extenstion.

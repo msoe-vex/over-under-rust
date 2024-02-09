@@ -36,5 +36,11 @@
         "--security-opt=seccomp:unconfined",
         "--security-opt=apparmor:unconfined"
         // "--volume=/tmp/.X11-unix:/tmp/.X11-unix"
-    ]
+    ],
+    "mounts": [
+        "source=${localWorkspaceFolder}/cargo_home,target=/workspaces/over-under-rust/cargo_home,type=bind,consistency=cached"
+    ],
+    "containerEnv": {
+        "CARGO_HOME": "/workspaces/over-under-rust/cargo_home"
+    },
 }
