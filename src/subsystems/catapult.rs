@@ -1,4 +1,4 @@
-use vex_rt::{adi, prelude::Error, AdiAnalog};
+use vex_rt::prelude::{Error, AdiAnalog};
 
 // use crate::num_traits::float::FloatCore;
 use crate::devices::motor_group::MotorGroup;
