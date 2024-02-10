@@ -12,6 +12,7 @@ impl MotorGroup {
         MotorGroup { motors }
     }
 
+    // Transforms a the local vector of SmartMotors into a vector of Motors so we can use the methods
     pub fn connect(&mut self) -> Result<Vec<&mut Motor>, Error> {
         self.motors
             .iter_mut()
@@ -57,7 +58,7 @@ impl MotorGroup {
     }
     pub fn tare_position(&mut self) -> Result<(), Error> {
         for motor in self.connect()? {
-            motor.tare_position();
+            motor.tare_position()?;
         }
         Ok(())
     }

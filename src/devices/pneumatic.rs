@@ -17,13 +17,17 @@ impl Pneumatic {
     }
 
     pub fn connect(&mut self) -> Result<&mut AdiDigitalOutput, Error> {
-        match self {
+        // match statements are just switch statements that MUST provide a case for all enum values
+        match self { 
             Pneumatic::Connected(device) => Ok(device),
             Pneumatic::Disconnected(port) => {
-                let taken_port = mem::take(port);
+                // Takes ownership of the AdiPort output
+                let taken_port = mem::take(port); 
+                // Creates a AdiDigitalOutput object from the port
                 let device = taken_port
                     .unwrap()
                     .into_adi_digital_output()
+                    // Swaps the AdiDigitalOutError object for a custom error string
                     .map_err(|_| Error::Custom(String::from("error")))?;
 
                 mem::swap(self, &mut Pneumatic::Connected(device));
