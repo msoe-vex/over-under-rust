@@ -28,6 +28,7 @@
         "Holonomic",
         "libeigen",
         "nodiscard",
+        "odometry",
         "opcontrol",
         "proto",
         "rclcpp",
